@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:astha@localhost:5432/inventory_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://inventory_db_mbsy_user:XAGIdO0fkffsxIKk2BNqIgyRi9ucWIfG@dpg-d8ggd4gjo6nc73eguos0-a.oregon-postgres.render.com/inventory_db_mbsy")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -1,32 +1,13 @@
 services:
-  db:
-    image: postgres:15-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: astha
-      POSTGRES_DB: inventory_db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d inventory_db"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
   backend:
     build: ./backend
     restart: unless-stopped
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:astha@db:5432/inventory_db
-    depends_on:
-      db:
-        condition: service_healthy
-
+      DATABASE_URL: postgresql://inventory_db_mbsy_user:XAGIdO0fkffsxIKk2BNqIgyRi9ucWIfG@dpg-d8ggd4gjo6nc73eguos0-a.oregon-postgres.render.com/inventory_db_mbsy
+    depends_on: []
+  
   frontend:
     build:
       context: ./frontend
@@ -35,8 +16,52 @@ services:
     restart: unless-stopped
     ports:
       - "3000:80"
-    depends_on:
-      - backend
 
-volumes:
-  pgdata:
+
+
+
+
+
+# services:
+#   db:
+#     image: postgres:15-alpine
+#     restart: unless-stopped
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: astha
+#       POSTGRES_DB: inventory_db
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+#     ports:
+#       - "5432:5432"
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U postgres -d inventory_db"]
+#       interval: 5s
+#       timeout: 5s
+#       retries: 10
+
+#   backend:
+#     build: ./backend
+#     restart: unless-stopped
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       DATABASE_URL: postgresql://inventory_db_mbsy_user:XAGIdO0fkffsxIKk2BNqIgyRi9ucWIfG@dpg-d8ggd4gjo6nc73eguos0-a.oregon-postgres.render.com/inventory_db_mbsy
+#     depends_on:
+#       db:
+#         condition: service_healthy
+
+#   frontend:
+#     build:
+#       context: ./frontend
+#       args:
+#         VITE_API_URL: http://localhost:8000
+#     restart: unless-stopped
+#     ports:
+#       - "3000:80"
+#     depends_on:
+#       - backend
+
+# volumes:
+#   pgdata:
+
